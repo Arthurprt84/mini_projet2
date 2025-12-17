@@ -30,5 +30,53 @@ public class grille_de_jeu {
         matriceCellules[idLigne][j].activercellule();
     }
 }
+    
+    public void activerColonneDeCellules(int idColonne) {
+    for (int i = 0; i < nbLignes; i++) {
+        matriceCellules[i][idColonne].activercellule();
+    }
+}
+    public void activerDiagonaleDescendante() {
+    for (int i = 0; i < Math.min(nbLignes, nbColonnes); i++) {
+        matriceCellules[i][i].activercellule();
+    }
+}
+
+public void activerDiagonaleMontante() {
+    for (int i = 0; i < Math.min(nbLignes, nbColonnes); i++) {
+        matriceCellules[i][nbColonnes - 1 - i].activercellule();
+    }
+}
+
+public boolean cellulesToutesEteintes() {
+    for (int i = 0; i < nbLignes; i++) {
+        for (int j = 0; j < nbColonnes; j++) {
+            if (!matriceCellules[i][j].esteteint()) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+public String toString() {
+    String resultat = "   ";
+    for (int j = 0; j < nbColonnes; j++) {
+        resultat += "| " + j + " ";
+    }
+    resultat += "|\n";
+
+    for (int i = 0; i < nbLignes; i++) {
+        resultat += "---".repeat(nbColonnes + 1) + "\n";
+        resultat += " " + i + " ";
+        for (int j = 0; j < nbColonnes; j++) {
+            resultat += "| " + matriceCellules[i][j] + " ";
+        }
+        resultat += "|\n";
+    }
+    resultat += "---".repeat(nbColonnes + 1) + "\n";
+    return resultat;
+}
+
+
 }
  
