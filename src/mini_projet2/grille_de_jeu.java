@@ -25,5 +25,10 @@ public class grille_de_jeu {
             }
         }
     }
+    public void activerLigneDeCellules(int idLigne) {
+    for (int j = 0; j < nbColonnes; j++) {
+        matriceCellules[idLigne][j].activercellule();
+    }
+}
 }
  
