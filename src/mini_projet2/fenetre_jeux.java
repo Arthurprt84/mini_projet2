@@ -4,6 +4,8 @@
  */
 package mini_projet2;
 
+import java.awt.GridLayout;
+
 /**
  *
  * @author mmars
@@ -17,7 +19,8 @@ public class fenetre_jeux extends javax.swing.JFrame {
      */
     public fenetre_jeux() {
         initComponents();
-        
+        PanneauGrille.setLayout(new GridLayout(10,10));
+
     }
 
     /**
