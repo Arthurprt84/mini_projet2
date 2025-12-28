@@ -5,6 +5,7 @@
 package mini_projet2;
 
 import java.awt.GridLayout;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,15 +14,61 @@ import java.awt.GridLayout;
 public class fenetre_jeux extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(fenetre_jeux.class.getName());
-
+    private grille_de_jeu grille;
+    private int nbCoups;
+    private int nbLignes = 10;
+    private int nbColonnes = 10;
     /**
      * Creates new form fenetre_jeux
      */
     public fenetre_jeux() {
         initComponents();
-        PanneauGrille.setLayout(new GridLayout(10,10));
+         grille = new grille_de_jeu(nbLignes, nbColonnes);
+        initialiserPartie();
 
+        PanneauGrille.setLayout(new GridLayout(nbLignes, nbColonnes));
+
+        for (int i = 0; i < nbLignes; i++) {
+            for (int j = 0; j < nbColonnes; j++) {
+                graphique cellule =
+                        new graphique(grille.getCellule(i, j), 36, 36);
+
+                int ligne = i;
+                int colonne = j;
+
+                cellule.addActionListener(e -> {
+                    grille.activerLigneDeCellules(ligne);
+                    grille.activerColonneDeCellules(colonne);
+                    nbCoups++;
+                    repaint();
+                    verifierFinPartie();
+                });
+
+                PanneauGrille.add(cellule);
+            }
+        }
+
+        pack();
+        setLocationRelativeTo(null);
     }
+      private void initialiserPartie() {
+        nbCoups = 0;
+        grille.eteindreToutesLesCellules();
+        grille.melangerMatriceAleatoirement(10);
+    }
+      
+    private void verifierFinPartie() {
+        if (grille.cellulesToutesEteintes()) {
+            JOptionPane.showMessageDialog(this,
+                    "Victoire en " + nbCoups + " coups !",
+                    "Fin de partie",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -88,6 +135,7 @@ public class fenetre_jeux extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+            new fenetre_jeux().setVisible(true);
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new fenetre_jeux().setVisible(true));
@@ -97,3 +145,4 @@ public class fenetre_jeux extends javax.swing.JFrame {
     private javax.swing.JPanel PanneauGrille;
     // End of variables declaration//GEN-END:variables
 }
+
