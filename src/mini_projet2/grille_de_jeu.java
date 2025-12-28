@@ -4,10 +4,11 @@
  */
 package mini_projet2;
 
-/**
- *
- * @author mmars
- */
+
+ 
+
+import java.util.Random;
+
 public class grille_de_jeu {
     
     private cellule_allume[][] matriceCellules;
@@ -24,6 +25,9 @@ public class grille_de_jeu {
                 matriceCellules[i][j] = new cellule_allume();
             }
         }
+    }
+     public cellule_allume getCellule(int i, int j) {
+        return matriceCellules[i][j];
     }
     public void activerLigneDeCellules(int idLigne) {
     for (int j = 0; j < nbColonnes; j++) {
@@ -47,6 +51,13 @@ public void activerDiagonaleMontante() {
         matriceCellules[i][nbColonnes - 1 - i].activercellule();
     }
 }
+public void eteindreToutesLesCellules() {
+        for (int i = 0; i < nbLignes; i++) {
+            for (int j = 0; j < nbColonnes; j++) {
+                matriceCellules[i][j].eteindrecellule();
+            }
+        }
+    }
 
 public boolean cellulesToutesEteintes() {
     for (int i = 0; i < nbLignes; i++) {
@@ -76,6 +87,17 @@ public String toString() {
     resultat += "---".repeat(nbColonnes + 1) + "\n";
     return resultat;
 }
+
+ public void melangerMatriceAleatoirement(int nbCoups) {
+        Random rand = new Random();
+
+        for (int k = 0; k < nbCoups; k++) {
+            int ligne = rand.nextInt(nbLignes);
+            int colonne = rand.nextInt(nbColonnes);
+            activerLigneDeCellules(ligne);
+            activerColonneDeCellules(colonne);
+        }
+    }
 
 
 }
