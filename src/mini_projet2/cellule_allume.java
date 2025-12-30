@@ -33,8 +33,7 @@ public class cellule_allume {
     }
 
     /**
-     * Vérifie si la cellule est éteinte.
-     * @return true si éteinte, false sinon
+     *   
      */
     public boolean esteteint() {
         return !etat;
