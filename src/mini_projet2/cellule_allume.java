@@ -12,22 +12,21 @@ public class cellule_allume {
    private boolean etat;
 
     /**
-     * Constructeur par défaut.
-     * Initialise la cellule à l'état éteint.
+     
      */
     public cellule_allume() {
         etat = false;
     }
 
     /**
-     * Inverse l'état de la cellule.
+     * 
      */
     public void activercellule() {
         etat = !etat;
     }
 
     /**
-     * Éteint la cellule.
+     * 
      */
     public void eteindrecellule() {
         etat = false;
