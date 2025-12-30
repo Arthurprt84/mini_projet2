@@ -99,6 +99,22 @@ public String toString() {
         }
     }
 
+public void activerCelluleEtVoisins(int ligne, int colonne) {
+    matriceCellules[ligne][colonne].activercellule();
+    
+    if (ligne > 0) {
+        matriceCellules[ligne - 1][colonne].activercellule(); 
+    }
+    if (ligne < nbLignes - 1) {
+        matriceCellules[ligne + 1][colonne].activercellule(); 
+    }
+    if (colonne > 0) {
+        matriceCellules[ligne][colonne - 1].activercellule(); 
+    }
+    if (colonne < nbColonnes - 1) {
+        matriceCellules[ligne][colonne + 1].activercellule(); 
+    }
+}
 
 }
  

@@ -12,45 +12,61 @@ import javax.swing.JOptionPane;
  * @author mmars
  */
 public class fenetre_jeux extends javax.swing.JFrame {
-    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(fenetre_jeux.class.getName());
     private grille_de_jeu grille;
     private int nbCoups;
     private int nbLignes = 10;
     private int nbColonnes = 10;
+    private boolean modeOriginal;
+    
+    public fenetre_jeux(boolean modeOriginal) {
+        initComponents();
+    this.modeOriginal = modeOriginal;
+        grille = new grille_de_jeu(nbLignes, nbColonnes);
+ 
+    initialiserPartie();
+
+    PanneauGrille.setLayout(new GridLayout(nbLignes, nbColonnes));
+
+    for (int i = 0; i < nbLignes; i++) {
+        for (int j = 0; j < nbColonnes; j++) {
+            graphique cellule = new graphique(grille.getCellule(i, j), 36, 36);
+            int ligne = i;
+            int colonne = j;
+
+            cellule.addActionListener(e -> {
+                if (modeOriginal) {
+                    grille.getCellule(ligne, colonne).activercellule();
+                    if (ligne > 0) grille.getCellule(ligne - 1, colonne).activercellule();
+                    if (ligne < nbLignes - 1) grille.getCellule(ligne + 1, colonne).activercellule();
+                    if (colonne > 0) grille.getCellule(ligne, colonne - 1).activercellule();
+                    if (colonne < nbColonnes - 1) grille.getCellule(ligne, colonne + 1).activercellule();
+                } else {
+                    grille.activerLigneDeCellules(ligne);
+                    grille.activerColonneDeCellules(colonne);
+                }
+
+                nbCoups++;
+                repaint();
+                verifierFinPartie();
+            });
+
+            PanneauGrille.add(cellule);
+        }
+    }
+
+    pack();
+    setLocationRelativeTo(null);
+}
+
+    
+    
+
     /**
      * Creates new form fenetre_jeux
      */
-    public fenetre_jeux() {
-        initComponents();
-         grille = new grille_de_jeu(nbLignes, nbColonnes);
-        initialiserPartie();
+    
 
-        PanneauGrille.setLayout(new GridLayout(nbLignes, nbColonnes));
-
-        for (int i = 0; i < nbLignes; i++) {
-            for (int j = 0; j < nbColonnes; j++) {
-                graphique cellule =
-                        new graphique(grille.getCellule(i, j), 36, 36);
-
-                int ligne = i;
-                int colonne = j;
-
-                cellule.addActionListener(e -> {
-                    grille.activerLigneDeCellules(ligne);
-                    grille.activerColonneDeCellules(colonne);
-                    nbCoups++;
-                    repaint();
-                    verifierFinPartie();
-                });
-
-                PanneauGrille.add(cellule);
-            }
-        }
-
-        pack();
-        setLocationRelativeTo(null);
-    }
       private void initialiserPartie() {
         nbCoups = 0;
         grille.eteindreToutesLesCellules();
@@ -118,31 +134,11 @@ public class fenetre_jeux extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-            new fenetre_jeux().setVisible(true);
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new fenetre_jeux().setVisible(true));
-    }
+  
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanneauGrille;
     // End of variables declaration//GEN-END:variables
-}
 
+}
